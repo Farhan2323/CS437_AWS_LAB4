@@ -3,7 +3,7 @@
   "ComponentName": "com.example.EmissionAnalyzer",
   "ComponentVersion": "1.0.0",
   "ComponentDescription": "Analyzes CO2 emission data from vehicles",
-  "ComponentPublisher": "Your Name",
+  "ComponentPublisher": "Farhan Ahmed",
   "ComponentConfiguration": {
     "DefaultConfiguration": {
       "GGV2PubSubSdkConfig": {
