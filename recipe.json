@@ -1,0 +1,81 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "com.example.EmissionAnalyzer",
+  "ComponentVersion": "1.0.0",
+  "ComponentDescription": "Analyzes CO2 emission data from vehicles",
+  "ComponentPublisher": "Your Name",
+  "ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "GGV2PubSubSdkConfig": {
+        "base-pubsub-topic": "vehicle/emission",
+        "ipc-subscribe-topics": ["vehicle/emission/data"],
+        "mqtt-subscribe-topics": ["vehicle/emission/data"]
+      },
+      "accessControl": {
+        "aws.greengrass.ipc.pubsub": {
+          "com.example.EmissionAnalyzer:publish:1": {
+            "policyDescription": "Allows access to publish to IPC topics",
+            "operations": [
+              "aws.greengrass#PublishToTopic"
+            ],
+            "resources": [
+              "*"
+            ]
+          },
+          "com.example.EmissionAnalyzer:subscribe:1": {
+            "policyDescription": "Allows access to subscribe to IPC topics",
+            "operations": [
+              "aws.greengrass#SubscribeToTopic"
+            ],
+            "resources": [
+              "*"
+            ]
+          }
+        },
+        "aws.greengrass.ipc.mqttproxy": {
+          "com.example.EmissionAnalyzer:publish:1": {
+            "policyDescription": "Allows access to publish to MQTT topics",
+            "operations": [
+              "aws.greengrass#PublishToIoTCore"
+            ],
+            "resources": [
+              "vehicle/emission/results/*"
+            ]
+          },       "com.example.EmissionAnalyzer:subscribe:1": {
+            "policyDescription": "Allows access to subscribe to MQTT topics",
+            "operations": [
+              "aws.greengrass#SubscribeToIoTCore"
+            ],
+            "resources": [
+              "vehicle/emission/data"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Manifests": [
+    {
+      "Platform": {
+        "os": "linux"
+      },
+      "Lifecycle": {
+        "Install": {
+          "Timeout": 300,
+          "Script": "python3 -m pip install awsgreengrasspubsubsdk"
+        },
+        "Run": {
+          "Script": "python3 -u {artifacts:decompressedPath}/src/main.py '{configuration:/GGV2PubSubSdkConfig}'",
+          "RequiresPrivilege": "false"
+        }
+      },
+      "Artifacts": [
+        {
+          "URI": "s3://farhan-awsbucket/com.example.EmissionAnalyzer/1.0.0/src.zip",
+          "Unarchive": "ZIP"
+        }
+      ]
+    }
+  ]
+}
+
