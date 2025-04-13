@@ -1,0 +1,17 @@
+{
+  "component": {
+    "com.example.EmissionAnalyzer": {
+      "author": "Farhan Ahmed",
+      "version": "1.0.0",
+      "build": {
+        "build_system": "zip"
+      },
+      "publish": {
+        "bucket": "farhan-awsbucket",
+        "region": "us-east-1"
+      }
+    }
+  },
+  "gdk_version": "1.0.0"
+}
+
